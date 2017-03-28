@@ -27,6 +27,5 @@ class MainMenuScreen(Screen):
         pass
 
     def render(self, game_display):
-        game_display.fill(constants.WHITE)
-        self.show_text('Main Menu', constants.BLACK, constants.DISPLAY_WIDTH / 2,
+        self.show_text('Main Menu', constants.WHITE, constants.DISPLAY_WIDTH / 2,
                        constants.DISPLAY_HEIGHT / 2, self.large_font, game_display)

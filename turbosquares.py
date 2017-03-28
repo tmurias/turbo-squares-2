@@ -10,6 +10,7 @@ pygame.display.set_caption('Turbo Squares 2.0')
 clock = pygame.time.Clock()
 small_font = pygame.font.Font('res/fonts/freesans.ttf', 20)
 large_font = pygame.font.Font('res/fonts/freesans.ttf', 40)
+background = pygame.image.load('res/images/background.png')
 
 
 def main():
@@ -22,6 +23,8 @@ def main():
                 exit_game()
 
         current_screen.update(events)
+
+        game_display.blit(background, (0, 0))
         current_screen.render(game_display)
 
         pygame.display.update()
