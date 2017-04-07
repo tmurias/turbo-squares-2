@@ -1,47 +1,54 @@
 import pygame
+import time
 from src.data import constants
-from src.components import screens, squares
+from src.components import screens
 
 
-# Setup
-pygame.init()
-icon = pygame.image.load('res/images/icon.png')
-pygame.display.set_icon(icon)
-game_display = pygame.display.set_mode((constants.DISPLAY_WIDTH, constants.DISPLAY_HEIGHT))
-pygame.display.set_caption('Turbo Squares 2.0')
-icon = pygame.image.load('res/images/icon.png')
-pygame.display.set_icon(icon)
-clock = pygame.time.Clock()
-small_font = pygame.font.Font('res/fonts/buster.ttf', 20)
-large_font = pygame.font.Font('res/fonts/buster.ttf', 50)
-background = pygame.image.load('res/images/background.png')
+class Main(object):
+
+    def __init__(self):
+        pygame.init()
+        icon = pygame.image.load('res/images/icon.png')
+        pygame.display.set_icon(icon)
+        self.game_display = pygame.display.set_mode((constants.DISPLAY_WIDTH,
+                                                    constants.DISPLAY_HEIGHT))
+        pygame.display.set_caption('Turbo Squares 2.0')
+        self.clock = pygame.time.Clock()
+        self.small_font = pygame.font.Font('res/fonts/buster.ttf', 20)
+        self.large_font = pygame.font.Font('res/fonts/buster.ttf', 50)
+        self.background = pygame.image.load('res/images/background.png')
+        self.current_screen = screens.MainMenuScreen(self.play_pressed)
+
+    def start(self):
+        curr_time = time.time()
+
+        while True:
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    self.exit_game()
+
+            # Update
+            elapsed_time = time.time() - curr_time
+            curr_time = time.time()
+            self.current_screen.update(events, elapsed_time)
+
+            # Render
+            self.game_display.blit(self.background, (0, 0))
+            self.current_screen.render(self.game_display)
+
+            pygame.display.update()
+            self.clock.tick(constants.FPS)
+
+    def play_pressed(self):
+        self.current_screen = screens.GameScreen(self.die)
+
+    def die(self):
+        self.current_screen = screens.MainMenuScreen(self.play_pressed)
+
+    def exit_game(self):
+        pygame.quit()
+        quit()
 
 
-def main():
-    current_screen = screens.MainMenuScreen(play)
-
-    while True:
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
-                exit_game()
-
-        current_screen.update(events)
-
-        game_display.blit(background, (0, 0))
-        current_screen.render(game_display)
-
-        pygame.display.update()
-        clock.tick(constants.FPS)
-
-
-def play():
-    print 'Play'
-
-
-def exit_game():
-    pygame.quit()
-    quit()
-
-
-main()
+Main().start()

@@ -1,6 +1,7 @@
 import pygame
 from .. data import constants
 from buttons import Button
+from squares import GoodSquare, BadSquare
 
 
 class Screen(object):
@@ -31,7 +32,7 @@ class MainMenuScreen(Screen):
                                   self.button_font, self.button_font_hover,
                                   "START GAME", self.on_play_clicked)
 
-    def update(self, events):
+    def update(self, events, elapsed_time):
         self.play_button.update(events, pygame.mouse.get_pos())
 
     def render(self, game_display):
@@ -39,3 +40,28 @@ class MainMenuScreen(Screen):
                        constants.DISPLAY_HEIGHT * 0.15, self.title_font, game_display)
 
         self.play_button.render(game_display)
+
+
+class GameScreen(Screen):
+
+    def __init__(self, on_death):
+        self.on_death = on_death
+
+        # Sprite containers to make collision detection and rendering easier
+        self.bad_squares = pygame.sprite.Group()
+        self.all_squares = pygame.sprite.Group()
+
+        # Spawn the good square
+        self.good_square = GoodSquare(constants.DISPLAY_WIDTH / 2,
+                                      constants.DISPLAY_HEIGHT / 2,
+                                      20, 0)
+        self.all_squares.add(self.good_square)
+
+        self.score = 0
+
+    def update(self, events, elapsed_time):
+        for square in self.all_squares:
+            square.update(events, elapsed_time)
+
+    def render(self, game_display):
+        pass
