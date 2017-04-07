@@ -1,5 +1,4 @@
 import pygame
-import time
 from src.data import constants
 from src.components import screens
 
@@ -20,7 +19,7 @@ class Main(object):
         self.current_screen = screens.MainMenuScreen(self.play_pressed)
 
     def start(self):
-        curr_time = time.time()
+        curr_time = pygame.time.get_ticks()
 
         while True:
             events = pygame.event.get()
@@ -29,8 +28,8 @@ class Main(object):
                     self.exit_game()
 
             # Update
-            elapsed_time = time.time() - curr_time
-            curr_time = time.time()
+            elapsed_time = pygame.time.get_ticks() - curr_time
+            curr_time = pygame.time.get_ticks()
             self.current_screen.update(events, elapsed_time)
 
             # Render
