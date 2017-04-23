@@ -78,6 +78,10 @@ class GameScreen(Screen):
         for square in self.bad_squares:
             square.update(events, elapsed_time)
 
+        collided_squares = pygame.sprite.spritecollide(self.good_square, self.bad_squares, False)
+        if len(collided_squares) > 0:
+            self.on_death()
+
     def render(self, game_display):
         self.good_square.render(game_display)
         for bad_square in self.bad_squares:
