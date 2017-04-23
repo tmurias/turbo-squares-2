@@ -54,7 +54,7 @@ class GameScreen(Screen):
         # Spawn the good square
         self.good_square = GoodSquare(constants.DISPLAY_WIDTH / 2,
                                       constants.DISPLAY_HEIGHT / 2,
-                                      20, 0)
+                                      constants.GOOD_SQUARE_SPEED, 0)
         self.all_squares.add(self.good_square)
 
         self.score = 0
@@ -64,4 +64,4 @@ class GameScreen(Screen):
             square.update(events, elapsed_time)
 
     def render(self, game_display):
-        pass
+        self.all_squares.draw(game_display)
