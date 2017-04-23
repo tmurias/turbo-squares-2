@@ -46,6 +46,8 @@ class MainMenuScreen(Screen):
 class GameScreen(Screen):
 
     def __init__(self, on_death):
+        self.score_font = pygame.font.Font('res/fonts/arcade.ttf', 50)
+
         self.on_death = on_death
 
         self.bad_squares = pygame.sprite.Group()
@@ -70,6 +72,7 @@ class GameScreen(Screen):
         if self.time_since_spawn >= 1000:
             self.spawn_bad_square()
             self.time_since_spawn = 0
+            self.score += 1
 
         self.good_square.update(events, elapsed_time)
         for square in self.bad_squares:
@@ -80,6 +83,10 @@ class GameScreen(Screen):
         for bad_square in self.bad_squares:
             if bad_square.active:
                 bad_square.render(game_display)
+
+        self.show_text(str(self.score), constants.BLUE,
+                       constants.DISPLAY_WIDTH * 0.1, constants.DISPLAY_HEIGHT * 0.1,
+                       self.score_font, game_display)
 
     def spawn_bad_square(self):
         for bad_square in self.bad_squares:
