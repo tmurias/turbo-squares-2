@@ -3,7 +3,7 @@ from .. data import constants
 
 
 class GoodSquare(pygame.sprite.Sprite):
-    def __init__(self, x, y, x_speed, y_speed):
+    def __init__(self, x, y, x_speed, y_speed, allow_off_screen=False):
         super(GoodSquare, self).__init__()
         self.image = pygame.image.load('res/images/good_square.png').convert_alpha()
         self.image.set_colorkey(constants.WHITE)
@@ -12,6 +12,7 @@ class GoodSquare(pygame.sprite.Sprite):
         self.rect.y = y
         self.x_speed = x_speed
         self.y_speed = y_speed
+        self.allow_off_screen = allow_off_screen
 
     def update(self, events, elapsed_time):
         for event in events:
@@ -32,20 +33,27 @@ class GoodSquare(pygame.sprite.Sprite):
         self.rect.x += self.x_speed
         self.rect.y += self.y_speed
 
-        # Prevent square from going out of bounds
-        width = self.rect.size[0]
-        height = self.rect.size[1]
-        if self.rect.x < 0:
-            self.rect.x = 0
-        elif self.rect.x > constants.DISPLAY_WIDTH - width:
-            self.rect.x = constants.DISPLAY_WIDTH - width
-        if self.rect.y < 0:
-            self.rect.y = 0
-        elif self.rect.y > constants.DISPLAY_HEIGHT - height:
-            self.rect.y = constants.DISPLAY_HEIGHT - height
+        # Prevent square from going out of bounds if not allowed
+        if not self.allow_off_screen:
+            width = self.rect.size[0]
+            height = self.rect.size[1]
+            if self.rect.x < 0:
+                self.rect.x = 0
+            elif self.rect.x > constants.DISPLAY_WIDTH - width:
+                self.rect.x = constants.DISPLAY_WIDTH - width
+            if self.rect.y < 0:
+                self.rect.y = 0
+            elif self.rect.y > constants.DISPLAY_HEIGHT - height:
+                self.rect.y = constants.DISPLAY_HEIGHT - height
 
     def render(self, game_display):
         game_display.blit(self.image, self.rect)
+
+    def get_x(self):
+        return self.rect.x
+
+    def get_y(self):
+        return self.rect.y
 
 
 class BadSquare(pygame.sprite.Sprite):

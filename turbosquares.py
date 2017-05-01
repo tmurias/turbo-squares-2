@@ -16,7 +16,7 @@ class Main(object):
         self.small_font = pygame.font.Font('res/fonts/buster.ttf', 20)
         self.large_font = pygame.font.Font('res/fonts/buster.ttf', 50)
         self.background = pygame.image.load('res/images/background.png')
-        self.current_screen = screens.MainMenuScreen(self.play_pressed)
+        self.current_screen = screens.MainMenuScreen(self.play_pressed, self.survival_pressed)
 
     def start(self):
         curr_time = pygame.time.get_ticks()
@@ -40,10 +40,13 @@ class Main(object):
             self.clock.tick(constants.FPS)
 
     def play_pressed(self):
-        self.current_screen = screens.GameScreen(self.die)
+        self.current_screen = screens.LevelsGameScreen(self.die)
+
+    def survival_pressed(self):
+        self.current_screen = screens.SurvivalGameScreen(self.die)
 
     def die(self):
-        self.current_screen = screens.MainMenuScreen(self.play_pressed)
+        self.current_screen = screens.MainMenuScreen(self.play_pressed, self.survival_pressed)
 
     def exit_game(self):
         pygame.quit()
