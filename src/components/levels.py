@@ -28,7 +28,11 @@ class Level1(object):
         self.good_square.update(events, elapsed_time)
         for bad_square in self.bad_squares:
             bad_square.update(events, elapsed_time)
-            if not bad_square.active:
+            reached_top = (bad_square.get_y() <= 0 and bad_square.y_speed < 0)
+            reached_bottom = (bad_square.get_y() >=
+                              constants.DISPLAY_HEIGHT-bad_square.get_height()
+                              and bad_square.y_speed > 0)
+            if reached_top or reached_bottom:
                 bad_square.y_speed *= -1
                 bad_square.active = True
 

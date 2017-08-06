@@ -90,3 +90,15 @@ class BadSquare(pygame.sprite.Sprite):
 
     def position_in_y_slot(self, y_slot):
         self.rect.y = y_slot * self.rect.size[1]
+
+    def get_x(self):
+        return self.rect.x
+
+    def get_y(self):
+        return self.rect.y
+
+    def get_width(self):
+        return self.rect.size[0]
+
+    def get_height(self):
+        return self.rect.size[1]
