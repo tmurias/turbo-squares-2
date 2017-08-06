@@ -166,3 +166,5 @@ class LevelsGameScreen(Screen):
         if self.level_number == 1:
             self.level_number = 2
             self.level_screen = Level2(self.on_death, self.next_level)
+        else:
+            self.on_death()
