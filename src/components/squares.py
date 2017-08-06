@@ -35,12 +35,10 @@ class GoodSquare(pygame.sprite.Sprite):
 
         # Prevent square from going out of bounds if not allowed
         if not self.allow_off_screen:
-            width = self.rect.size[0]
             height = self.rect.size[1]
             if self.rect.x < 0:
                 self.rect.x = 0
-            elif self.rect.x > constants.DISPLAY_WIDTH - width:
-                self.rect.x = constants.DISPLAY_WIDTH - width
+            # You can always cross the right side of the screen, that's how you win
             if self.rect.y < 0:
                 self.rect.y = 0
             elif self.rect.y > constants.DISPLAY_HEIGHT - height:
