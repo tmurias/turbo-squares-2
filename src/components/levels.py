@@ -35,7 +35,7 @@ class Level1(Level):
         # Spawn the good square
         self.good_square = GoodSquare(0,
                                       constants.DISPLAY_HEIGHT / 2,
-                                      constants.GOOD_SQUARE_SPEED, 0,
+                                      0, 0,
                                       allow_off_screen=False)
 
         # Spawn the bad squares
@@ -79,10 +79,38 @@ class Level2(Level):
         self.generate_map(level_maps.LEVEL2_MAP)
 
         # Spawn the good square
+        self.good_square = GoodSquare(0,
+                                      constants.DISPLAY_HEIGHT / 3,
+                                      0, 0,
+                                      allow_off_screen=False)
+
+    def update(self, events, elapsed_time):
+        self.good_square.update(events, elapsed_time)
+
+        # If the player hit a red square, end the game
+        collided_squares = pygame.sprite.spritecollide(self.good_square, self.bad_squares, False)
+        if len(collided_squares) > 0:
+            self.on_death()
+
+        # If the player crossed the right side of the screen, they beat the level
+        if self.good_square.get_x() >= constants.DISPLAY_WIDTH:
+            self.on_complete()
+
+
+class Level3(Level):
+    def __init__(self, on_death, on_complete):
+        self.on_death = on_death
+        self.on_complete = on_complete
+        self.bad_squares = pygame.sprite.Group()
+
+        # Spawn all the static bad squares that form the map
+        self.generate_map(level_maps.LEVEL3_MAP)
+
+        # Spawn the good square
         y_pos = constants.DISPLAY_HEIGHT/constants.Y_SLOTS + constants.BAD_SQUARE_HEIGHT/10
         self.good_square = GoodSquare(0,
                                       y_pos,
-                                      constants.GOOD_SQUARE_SPEED, 0,
+                                      0, 0,
                                       allow_off_screen=False)
 
     def update(self, events, elapsed_time):

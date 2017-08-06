@@ -3,7 +3,7 @@ import random
 from .. data import constants
 from buttons import Button
 from squares import GoodSquare, BadSquare
-from levels import Level1, Level2
+from levels import Level1, Level2, Level3
 
 
 class Screen(object):
@@ -166,5 +166,8 @@ class LevelsGameScreen(Screen):
         if self.level_number == 1:
             self.level_number = 2
             self.level_screen = Level2(self.on_death, self.next_level)
+        elif self.level_number == 2:
+            self.level_number = 3
+            self.level_screen  = Level3(self.on_death, self.next_level)
         else:
             self.on_death()
