@@ -1,9 +1,9 @@
 import pygame
 import random
-from .. data import constants
-from buttons import Button
-from squares import GoodSquare, BadSquare
-from levels import Level1, Level2, Level3
+from src.data import constants
+from src.components.buttons import Button
+from src.components.squares import GoodSquare, BadSquare
+from src.components.levels import Level1, Level2, Level3
 
 
 class Screen(object):

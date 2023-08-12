@@ -1,6 +1,6 @@
 import pygame
-from .. data import constants, level_maps
-from squares import GoodSquare, BadSquare
+from src.data import constants, level_maps
+from src.components.squares import GoodSquare, BadSquare
 
 
 class Level(object):

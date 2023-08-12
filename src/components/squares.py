@@ -1,5 +1,5 @@
 import pygame
-from .. data import constants
+from src.data import constants
 
 
 class GoodSquare(pygame.sprite.Sprite):
